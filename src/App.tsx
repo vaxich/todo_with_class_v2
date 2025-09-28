@@ -15,45 +15,50 @@ export type FilterValueType = "All" | "Active" | "Completed";
 function App() {
 
   const todolistTitle1: string = 'what to learn'
+
   const [filter, setFilter] = useState<"All" | "Active" | "Completed">("All")
-  const [tasks, setTasks] = useState([
+
+  const [tasks, setTasks] = useState<TaskType[]>([
     { id: crypto.randomUUID(), title: "HTML", isDone: true, },
     { id: crypto.randomUUID(), title: "REACT", isDone: false, },
     { id: crypto.randomUUID(), title: "JS", isDone: false, },
   ]);
 
-  // const tasks_1 : Array<TaskType> = [
-  //   {id: crypto.randomUUID() , title: "HTML" , isDone: true,},
-  //   {id: crypto.randomUUID()  , title: "REACT" , isDone: false,},
-  //   {id: crypto.randomUUID()  ,  title: "JS" , isDone: false,},
-  // ]
+
 
   const removeTask = (taskId: string) => {
-    let newtasks = tasks.filter(task => task.id != taskId)
+    let newtasks = tasks.filter(task => task.id !== taskId)
     setTasks(newtasks)
   }
 
-  const changeFilter = (nextFilterValue: FilterValueType) =>     {
+  const changeFilter = (nextFilterValue: FilterValueType) => {
     setFilter(nextFilterValue)
   }
 
+  const addTaks = (newTile: string) => {
+   
+    const newTask: TaskType = { id: crypto.randomUUID() , title: newTile, isDone: false };
+    
+    setTasks([newTask , ...tasks])
+  }
 
-  const getFilteredTasksForRender = (tasks : TaskType[], filterValue: FilterValueType) => {
+
+  const getFilteredTasksForRender = (tasks: TaskType[], filterValue: FilterValueType) => {
     switch (filterValue) {
       case "Active":
-        return tasks.filter(task => task.isDone === false)
+        return tasks.filter(task => !task.isDone )
       case "Completed":
-        return tasks.filter(task => task.isDone === true)
-        default:
-          return tasks
+        return tasks.filter(task => task.isDone )
+      default:
+        return tasks
     }
   }
-   const filteredTasksForRender: TaskType[] = getFilteredTasksForRender(tasks, filter)
+  const filteredTasksForRender: TaskType[] = getFilteredTasksForRender(tasks, filter)
 
 
   return (
     <div className="App">
-      <Todolist tasks={filteredTasksForRender} title={todolistTitle1} removeTask={removeTask} changeFilter = {changeFilter}/>
+      <Todolist tasks={filteredTasksForRender} title={todolistTitle1} removeTask={removeTask} changeFilter={changeFilter} addTaks = {addTaks}/>
 
     </div>
   );
