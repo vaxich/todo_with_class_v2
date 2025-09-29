@@ -17,3 +17,24 @@
   height: max-content;
 
 }
+
+.task {
+  font-weight: bold;
+}
+.task-done {
+  text-decoration: line-through;
+  opacity: 0.5;
+}
+
+.btn-active {
+ background-color: chocolate;
+ color: white;
+ border-radius: 3px;
+ border: 1px solid chocolate;
+}
+
+.input-error {
+  border: 2px solid red;
+  border-radius: 3px;
+  outline: none;
+}
