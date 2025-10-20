@@ -2,6 +2,8 @@
 import { useState } from 'react';
 import './App.css';
 import { Todolist } from './Todolist';
+import { AddItemForm } from './AddItemForm';
+import { title } from 'process';
 
 export type TodolistsType = {
   id: string
@@ -42,9 +44,9 @@ function App() {
       { id: crypto.randomUUID(), title: "JS", isDone: false, },
     ],
     [todoistId2]: [
-      { id: crypto.randomUUID(), title: "HTML", isDone: true, },
-      { id: crypto.randomUUID(), title: "REACT", isDone: false, },
-      { id: crypto.randomUUID(), title: "JS", isDone: false, },
+      { id: crypto.randomUUID(), title: "bread", isDone: true, },
+      { id: crypto.randomUUID(), title: "tea", isDone: false, },
+      { id: crypto.randomUUID(), title: "sigi", isDone: false, },
     ],
   })
 
@@ -78,11 +80,23 @@ function App() {
 
   }
 
+  const addTodolist = (newTile: string) => {
+    let newTodolistId = crypto.randomUUID()
+    let newTodolist: TodolistsType = { id: newTodolistId, title: newTile, filter: 'All' }
+    setTodolists([newTodolist, ...todolists])
+    setTasks({ ...tasks, [newTodolistId]: [] })
+  }
 
-
+  const updateTaskTitle = (todolistId: string, taskId: string, newTitle: string) => {
+    setTasks({ ...tasks, [todolistId]: tasks[todolistId].map(task => task.id === taskId ? { ...task, title: newTitle } : task) })
+  }
+  const updateTodolistTitle = (todolistId: string, newTitle: string) => {
+    setTodolists(todolists.map(tl => tl.id === todolistId ? { ...tl, title: newTitle } : tl))
+  }
 
   return (
     <div className="App">
+      <AddItemForm onClick={addTodolist} />
       {todolists.map(tl => {
 
         const getFilteredTasksForRender = (tasks: TaskType[], filterValue: FilterValueType) => {
@@ -109,6 +123,8 @@ function App() {
             addTaks={addTaks}
             ChangeTaskStatus={ChangeTaskStatus}
             removeTodolist={removeTodolist}
+            updateTaskTitle={updateTaskTitle}
+            updateTodolistTitle={updateTodolistTitle}
           />
         )
       })}
