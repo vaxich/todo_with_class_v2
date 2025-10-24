@@ -1,13 +1,15 @@
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
 import { useState } from "react";
 
 type addItemFormProps = {
-    
-    onClick: ( inputValue: string) => void
+
+    onClick: (inputValue: string) => void
 }
 
 export const AddItemForm = (props: addItemFormProps) => {
 
-    const {  onClick } = props
+    const { onClick } = props
 
 
 
@@ -41,19 +43,39 @@ export const AddItemForm = (props: addItemFormProps) => {
             ? <span>enter new title</span>
             : <span>yout title very long</span>
 
+    const styleButton = {
+        maxWidth: '38px',
+        maxHeight: '38px',
+        minWidth: '38px',
+        minHeight: '38px'
+
+    }
+
     return (
         <div>
-            <input
+            {/* <input
+                className={inputError ? "input-error" : ""}
+                onChange={onChangeSetNewTitle}
+                value={newInputValue}
+                onKeyDown={onkeyDownAddtask}
+            /> */}
+            <TextField
+                error={!!inputError}
+                size="small"
+                id="outlined-basic"
+                label={inputError ? inputError : "type text" }
+                variant="outlined"
                 className={inputError ? "input-error" : ""}
                 onChange={onChangeSetNewTitle}
                 value={newInputValue}
                 onKeyDown={onkeyDownAddtask}
             />
-            <button
+            {/* <button
                 onClick={() => onClickAddTaks()}
                 disabled={newInputValue === "" || newInputValue.length > 15}>
                 +
-            </button>
+            </button> */}
+            <Button onClick={() => onClickAddTaks()} variant="contained" disabled={newInputValue === "" || newInputValue.length > 15} style={styleButton}>+</Button>
             <div>
                 {userMessage}
             </div>

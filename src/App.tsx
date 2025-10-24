@@ -3,7 +3,11 @@ import { useState } from 'react';
 import './App.css';
 import { Todolist } from './Todolist';
 import { AddItemForm } from './AddItemForm';
-import { title } from 'process';
+
+import ButtonAppBar from './ButtonAppBar';
+import Container from '@mui/material/Container';
+import Grid from '@mui/material/Grid';
+import Paper from '@mui/material/Paper';
 
 export type TodolistsType = {
   id: string
@@ -20,10 +24,10 @@ export type FilterValueType = "All" | "Active" | "Completed";
 
 function App() {
 
-  //const todolistTitle1: string = 'what to learn'
+
   let todoistId1 = crypto.randomUUID();
   let todoistId2 = crypto.randomUUID();
-  //const [filter, setFilter] = useState<"All" | "Active" | "Completed">("All")
+
 
   const [todolists, setTodolists] = useState<TodolistsType[]>([
     { id: todoistId1, title: "what to learn", filter: 'All', },
@@ -96,39 +100,51 @@ function App() {
 
   return (
     <div className="App">
-      <AddItemForm onClick={addTodolist} />
-      {todolists.map(tl => {
+      <ButtonAppBar />
+      <Container fixed >
+        <Grid container  spacing={3}>
+          <AddItemForm onClick={addTodolist} />
+        </Grid>
+        <Grid container >
 
-        const getFilteredTasksForRender = (tasks: TaskType[], filterValue: FilterValueType) => {
-          switch (filterValue) {
-            case "Active":
-              return tasks.filter(task => !task.isDone)
-            case "Completed":
-              return tasks.filter(task => task.isDone)
-            default:
-              return tasks
+          {todolists.map(tl => {
+
+            const getFilteredTasksForRender = (tasks: TaskType[], filterValue: FilterValueType) => {
+              switch (filterValue) {
+                case "Active":
+                  return tasks.filter(task => !task.isDone)
+                case "Completed":
+                  return tasks.filter(task => task.isDone)
+                default:
+                  return tasks
+              }
+            }
+            const filteredTasksForRender: TaskType[] = getFilteredTasksForRender(tasks[tl.id], tl.filter)
+
+            return (
+              <Paper elevation={3} style={{padding: '10px' , margin: '10px'}}>
+                <Todolist
+                  key={tl.id}
+                  todolistId={tl.id}
+                  tasks={filteredTasksForRender}
+                  title={tl.title}
+                  filter={tl.filter}
+                  removeTask={removeTask}
+                  changeFilter={changeFilter}
+                  addTaks={addTaks}
+                  ChangeTaskStatus={ChangeTaskStatus}
+                  removeTodolist={removeTodolist}
+                  updateTaskTitle={updateTaskTitle}
+                  updateTodolistTitle={updateTodolistTitle}
+                />
+              </Paper>
+
+
+            )
+          })
           }
-        }
-        const filteredTasksForRender: TaskType[] = getFilteredTasksForRender(tasks[tl.id], tl.filter)
-
-        return (
-          <Todolist
-            key={tl.id}
-            todolistId={tl.id}
-            tasks={filteredTasksForRender}
-            title={tl.title}
-            filter={tl.filter}
-            removeTask={removeTask}
-            changeFilter={changeFilter}
-            addTaks={addTaks}
-            ChangeTaskStatus={ChangeTaskStatus}
-            removeTodolist={removeTodolist}
-            updateTaskTitle={updateTaskTitle}
-            updateTodolistTitle={updateTodolistTitle}
-          />
-        )
-      })}
-
+        </Grid>
+      </Container>
 
     </div>
   );
