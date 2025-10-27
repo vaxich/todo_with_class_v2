@@ -6,7 +6,8 @@ import { EditableSpan } from "./EditableSpan"
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Button from "@mui/material/Button";
-import Checkbox from "@mui/material/Checkbox";
+import { CheckBox } from "./CheckBox";
+
 
 
 
@@ -56,6 +57,10 @@ export const Todolist = (props: TodolistPropsType) => {
         changeFilter(todolistId, "Completed")
     }
 
+    const callBackHandler = (taskId: string, newValue: boolean) => {
+        ChangeTaskStatus(todolistId, taskId, newValue)
+    }
+
     return (
         <div className='todolist'>
             <h3>
@@ -78,9 +83,7 @@ export const Todolist = (props: TodolistPropsType) => {
                             removeTask(todolistId, task.id)
                         }
 
-                        const OnChangeCheckboxHandler = (event: ChangeEvent<HTMLInputElement>) => {
-                            ChangeTaskStatus(todolistId, task.id, event.currentTarget.checked)
-                        }
+                        //  git status
 
                         // const updateTaskTitleGandler = (newTitle: string) => {
                         //     updateTaskTitle(todolistId, task.id, newTitle)
@@ -89,7 +92,8 @@ export const Todolist = (props: TodolistPropsType) => {
                         return (
                             <li key={task.id} className={task.isDone ? "task-done" : "task"}>
                                 {/* <input type="checkbox" checked={task.isDone} onChange={OnChangeCheckboxHandler} /> */}
-                                <Checkbox checked={task.isDone} onChange={OnChangeCheckboxHandler}/>
+                                {/* <Checkbox checked={task.isDone} onChange={OnChangeCheckboxHandler}/> */}
+                                <CheckBox checked={task.isDone} onChange={ (value) =>callBackHandler(task.id, value)}/>
                                 {/* <span className={task.isDone ? "task-done" : "task"}>{task.title}</span> */}
                                 <EditableSpan title={task.title} onClick={(newTitle) => updateTaskTitleGandler(task.id, newTitle)} />
                                 {/* <button onClick={onClickRemoveTasHandler}>x</button> */}
