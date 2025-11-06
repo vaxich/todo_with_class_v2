@@ -20,6 +20,10 @@ export type TaskType = {
   isDone: boolean
 }
 
+export type TasksStateType = {
+  [key: string] : TaskType[]
+}
+
 export type FilterValueType = "All" | "Active" | "Completed";
 
 function App() {
@@ -35,13 +39,7 @@ function App() {
   ]);
 
 
-  // const [tasks, setTasks] = useState<TaskType[]>([
-  //   { id: crypto.randomUUID(), title: "HTML", isDone: true, },
-  //   { id: crypto.randomUUID(), title: "REACT", isDone: false, },
-  //   { id: crypto.randomUUID(), title: "JS", isDone: false, },
-  // ]);
-
-  const [tasks, setTasks] = useState({
+  const [tasks, setTasks] = useState<TasksStateType>({
     [todoistId1]: [
       { id: crypto.randomUUID(), title: "HTML", isDone: true, },
       { id: crypto.randomUUID(), title: "REACT", isDone: false, },
