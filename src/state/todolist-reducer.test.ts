@@ -1,18 +1,29 @@
-// import { FilterValueType, TodolistsType } from "../App"
-// import { addTodolistAC, changeTodolistFilterAC, changeTodolistTitleAC, removeTodolistAC, todolistReducer } from "./todolist-reducer"
 
-import { v1 } from "uuid"
+
+
 import { FilterValueType, TodolistsType } from "../App"
 import { addTodolistAC, changeTodolistFilterAC, changeTodolistTitleAC, removeTodolistAC, todolistReducer } from "./todolist-reducer"
 
-test('correct todolist should be removed', () => {
-    let todolistId1 = '67657456'
-    let todolistId2 = '57465754'
+let todolistId1 : string
+let todolistId2 : string
 
-    const startState: TodolistsType[] = [
+let startState: TodolistsType[]
+
+beforeEach( () => {
+    const crypto = require('crypto');
+     todolistId1 = crypto.randomUUID()
+     todolistId2 = crypto.randomUUID()
+
+     startState = [
         {id: todolistId1, title: 'What to learn', filter: 'All'},
         {id: todolistId2, title: 'What to buy', filter: 'All'}
     ]
+})
+
+
+
+test('correct todolist should be removed', () => {  
+   
 
     const endState = todolistReducer(startState, removeTodolistAC(todolistId1))
     expect(endState.length).toBe(1)
@@ -20,8 +31,7 @@ test('correct todolist should be removed', () => {
 })
 
 test('correct todolist should be added', () => {
-    let todolistId1 = v1()
-    let todolistId2 = v1()
+    
 
     let newTodolistTitle = "New Todolist"
 
@@ -38,8 +48,7 @@ test('correct todolist should be added', () => {
 })
 
 test("correct todolist should change its name", () => {
-    let todolistId1 = '6754674567'
-    let todolistId2 = '4375537475'
+  
 
     let newTodolistTitle = "New Todolist"
 
@@ -57,8 +66,7 @@ test("correct todolist should change its name", () => {
 })
 
 test("correct filter of todolist should be change", () => {
-    let todolistId1 = '56345645'
-    let todolistId2 = '6745675'
+    
 
     let newFilter: FilterValueType = "Completed"
 
@@ -74,9 +82,3 @@ test("correct filter of todolist should be change", () => {
     expect(endState[0].filter).toBe('All')
     expect(endState[1].filter).toBe(newFilter)
 })
-
-
-function uuidv1() {
-    throw new Error("Function not implemented.")
-}
-

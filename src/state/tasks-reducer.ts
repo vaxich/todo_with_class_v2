@@ -1,16 +1,19 @@
 
+import { v1 } from "uuid";
 import { TasksStateType } from "../App";
 import { AddTodolistACType, RemoveTodolistACType } from "./todolist-reducer";
 
 
-export const tasksReducer = (state: TasksStateType, action: tasksReducerType): TasksStateType => {
+const initialState: TasksStateType = {}
+
+export const tasksReducer = (state= initialState, action: tasksReducerType): TasksStateType => {
     switch (action.type) {
         case 'REMOVE-TASK': {
             // setTasks({ ...tasks, [todolistId]: tasks[todolistId].filter(task => task.id !== taskId) })
             return { ...state, [action.payload.todolistId]: state[action.payload.todolistId].filter(task => task.id !== action.payload.taskId) }
         }
         case 'ADD-TASK': {
-            const newTask = { id: '47345', title: action.payload.newTitle, isDone: false }; // : TaskType
+            const newTask = { id: v1(), title: action.payload.newTitle, isDone: false }; // : TaskType
             // setTasks({ ...tasks, [todolistId]: [...tasks[todolistId], newTask] })
             return { ...state, [action.payload.todolistId]: [newTask, ...state[action.payload.todolistId]] }
         }
