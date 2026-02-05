@@ -1,11 +1,11 @@
-import { useState } from "react"
+import { memo, useState } from "react"
 
 type ediableSpanProps = {
     title: string
     onClick: (newTitle: string) => void
 }
 
-export const EditableSpan = (props: ediableSpanProps) => {
+export const EditableSpan = memo( (props: ediableSpanProps) => {
     const { title , onClick} = props;
 
     const [edit, setEdit] = useState(false);
@@ -34,4 +34,4 @@ export const EditableSpan = (props: ediableSpanProps) => {
             ? <input value={newTitle} onChange={onChangeHandler} onBlur={editHandler} autoFocus />
             : <span onDoubleClick={editHandler}>{title}</span>
     )
-}
+})

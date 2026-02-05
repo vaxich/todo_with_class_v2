@@ -1,13 +1,13 @@
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import { useState } from "react";
+import { memo, useState } from "react";
 
 type addItemFormProps = {
 
     onClick: (inputValue: string) => void
 }
 
-export const AddItemForm = (props: addItemFormProps) => {
+export const AddItemForm = memo( (props: addItemFormProps) => {
 
     const { onClick } = props
 
@@ -53,12 +53,7 @@ export const AddItemForm = (props: addItemFormProps) => {
 
     return (
         <div>
-            {/* <input
-                className={inputError ? "input-error" : ""}
-                onChange={onChangeSetNewTitle}
-                value={newInputValue}
-                onKeyDown={onkeyDownAddtask}
-            /> */}
+            
             <TextField
                 error={!!inputError}
                 size="small"
@@ -70,11 +65,7 @@ export const AddItemForm = (props: addItemFormProps) => {
                 value={newInputValue}
                 onKeyDown={onkeyDownAddtask}
             />
-            {/* <button
-                onClick={() => onClickAddTaks()}
-                disabled={newInputValue === "" || newInputValue.length > 15}>
-                +
-            </button> */}
+           
             <Button onClick={() => onClickAddTaks()} variant="contained" disabled={newInputValue === "" || newInputValue.length > 15} style={styleButton}>+</Button>
             <div>
                 {userMessage}
@@ -82,4 +73,4 @@ export const AddItemForm = (props: addItemFormProps) => {
 
         </div>
     )
-}
+})

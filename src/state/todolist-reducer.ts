@@ -1,6 +1,7 @@
 
 import { v1 } from "uuid";
-import { FilterValueType, TodolistsType } from "../App";
+import { FilterValueType, TodolistsType } from "../AppWithRedux";
+
 
 
 const initialState:TodolistsType[] = []
@@ -8,11 +9,11 @@ const initialState:TodolistsType[] = []
 export const todolistReducer = (state= initialState, action: todolistReducerType): TodolistsType[] => {
     switch (action.type) {
         case 'REMOVE-TODOLIST': {
-            return state.filter(tl => tl.id !== action.payload.todolistId)
+            return state.filter(tl => tl.todolistId !== action.payload.todolistId)
         }
         case 'ADD-TODOLIST': {
             //  let newTodolistId = '5735673'
-            let newTodolist: TodolistsType = { id: action.payload.todolistId, title: action.payload.newTile, filter: 'All' }
+            let newTodolist: TodolistsType = { todolistId: action.payload.todolistId, title: action.payload.newTile, filter: 'All' }
             return [...state, newTodolist]
             // setTodolists([newTodolist, ...todolists])
             // setTasks({ ...tasks, [newTodolistId]: [] })
@@ -20,11 +21,11 @@ export const todolistReducer = (state= initialState, action: todolistReducerType
         }
         case 'CHANGE-TODOLIST-TITLE': {
             // setTodolists(todolists.map(tl => tl.id === todolistId ? { ...tl, title: newTitle } : tl))
-            return state.map(tl => tl.id === action.payload.todolistId ? { ...tl, title: action.payload.newTile } : tl)
+            return state.map(tl => tl.todolistId === action.payload.todolistId ? { ...tl, title: action.payload.newTile } : tl)
         }
         case 'CHANGE-TODOLIST-FILTER': {
             // setTodolists(todolists.map((tl) => tl.id === todolistId ? { ...tl, filter: nextFilterValue } : tl))
-            return state.map((tl) => tl.id === action.payload.todolistId ? { ...tl, filter: action.payload.nextFilterValue } : tl)
+            return state.map((tl) => tl.todolistId === action.payload.todolistId ? { ...tl, filter: action.payload.nextFilterValue } : tl)
         }
         default: return state
     }
